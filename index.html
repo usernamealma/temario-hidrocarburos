@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Educativo - Hidrocarburos y Petroquímica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-sidebar: #090d16;
+            --text-sidebar: #94a3b8;
+            --text-main: #1e293b;
+            --accent: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #e2e8f0;
+        }
+
+        /* --- BARRA LATERAL FIJA --- */
+        aside {
+            width: 320px;
+            background-color: var(--bg-sidebar);
+            color: var(--text-sidebar);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #1e293b;
+            flex-shrink: 0;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            text-align: center;
+            border-bottom: 1px solid #1e293b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-header:hover {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.15rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-header h2 i {
+            color: #38bdf8;
+            font-size: 1.3rem;
+        }
+
+        .search-box {
+            padding: 16px 20px;
+            background: #090d16;
+            border-bottom: 1px solid #1e293b;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 32px;
+            top: 28px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #38bdf8;
+            background: #0f172a;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        .category-group {
+            margin-bottom: 22px;
+        }
+
+        .category-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #64748b;
+            padding: 6px 12px;
+            font-weight: 700;
+        }
+
+        .topic-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: var(--text-sidebar);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-top: 4px;
+            border-left: 3px solid transparent;
+        }
+
+        .topic-link:hover {
+            background-color: #111827;
+            color: #f8fafc;
+            transform: translateX(4px);
+        }
+
+        .topic-link i {
+            font-size: 1.05rem;
+            width: 20px;
+            text-align: center;
+            color: #64748b;
+            transition: color 0.2s;
+        }
+
+        .topic-link:hover i {
+            color: #38bdf8;
+        }
+
+        .topic-link.active {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+            border-left-color: #38bdf8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .topic-link.active i {
+            color: #38bdf8;
+        }
+
+        .topic-link.desafios-menu {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            border-left: 3px solid #fde047;
+        }
+
+        .topic-link.desafios-menu:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .topic-link.desafios-menu i {
+            color: #ffffff !important;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL AMPLIADO A TODA LA PANTALLA RESTANTE --- */
+        main {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #e0f2fe;
+            height: 100vh;
+            transition: background 0.4s ease;
+        }
+
+        .content-card {
+            background: #ffffff;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #cbd5e1;
+            overflow-y: auto;
+            animation: cardEnter 0.35s ease forwards;
+        }
+
+        .content-card.fade-out {
+            animation: cardExit 0.25s ease forwards;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes cardExit {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+        }
+
+        .header-controles-superior {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-flecha-anterior {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            animation: elementFadeIn 0.4s ease;
+        }
+
+        .btn-flecha-anterior:hover {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .content-image-container {
+            width: 100%;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: elementFadeIn 0.4s ease;
+        }
+
+        .content-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .content-image-container img:hover {
+            transform: scale(1.03);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .badges-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            animation: elementFadeIn 0.4s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .badge-dificultad {
+            background: #bfdbfe;
+            color: #1e40af;
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: #334155;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            animation: elementFadeIn 0.45s ease;
+        }
+
+        .content-section {
+            background: #f8fafc;
+            border-left: 6px solid var(--primary);
+            padding: 25px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            animation: elementFadeIn 0.5s ease;
+        }
+
+        .content-section h3 {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .content-section ul {
+            padding-left: 22px;
+            color: #334155;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* --- ESTILOS DE LA NUEVA PORTADA INTERACTIVA Y ANIMADA --- */
+        .hero-banner {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border-radius: 20px;
+            padding: 50px 40px;
+            color: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.25);
+            margin-bottom: 30px;
+            animation: elementFadeIn 0.5s ease;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: pulseGlow 6s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.9; }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            color: #ffffff;
+            font-size: 2.7rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            color: #cbd5e1;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn-primary {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn-primary:hover {
+            background: #0ea5e9;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.6);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 28px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        /* Tarjetas interactivas flotantes dentro de la portada */
+        .hero-interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .feature-mini-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 22px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-mini-card:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: #38bdf8;
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .feature-mini-card i {
+            font-size: 2rem;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .feature-mini-card:hover i {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .feature-mini-card h3 {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .feature-mini-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Sección de resumen inferior de la portada */
+        .home-info-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 10px;
+            animation: elementFadeIn 0.6s ease;
+        }
+
+        .info-box-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 25px;
+            border-radius: 14px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .info-box-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border-color: var(--primary);
+        }
+
+        .info-box-card i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .info-box-card h4 {
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .info-box-card p {
+            font-size: 0.98rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .game-menu-vertical {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+            animation: elementFadeIn 0.4s ease;
+        }
+
+        .game-nav-btn {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            padding: 25px;
+            border-radius: 14px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .game-nav-btn:hover {
+            border-color: #f59e0b;
+            background: #fef9c3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .btn-volver-menu {
+            background: #e2e8f0;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+            animation: elementFadeIn 0.3s ease;
+        }
+
+        .btn-volver-menu:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-reiniciar-juego {
+            background: #f59e0b;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            box-shadow: 0 2px 5px rgba(245, 158, 11, 0.3);
+            animation: elementFadeIn 0.3s ease;
+        }
+
+        .btn-reiniciar-juego:hover {
+            background: #d97706;
+        }
+
+        .btn-siguiente-nivel {
+            background: #16a34a;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            box-shadow: 0 2px 5px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-siguiente-nivel:hover {
+            background: #15803d;
+        }
+
+        @keyframes elementFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SELECTOR DE NIVELES --- */
+        .niveles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .nivel-card {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .nivel-card:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37,99,235,0.15);
+        }
+
+        /* --- SOPA DE LETRAS --- */
+        .sopa-layout {
+            display: flex;
+            gap: 45px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .sopa-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 48px);
+            gap: 5px;
+            user-select: none;
+        }
+
+        .sopa-cell {
+            width: 48px;
+            height: 48px;
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.15rem;
+            cursor: pointer;
+            border-radius: 8px;
+            color: #1e293b;
+            transition: all 0.15s;
+        }
+
+        .sopa-cell:hover {
+            border-color: #9333ea;
+            background: #f3e8ff;
+        }
+
+        .sopa-cell.selected {
+            background: #fef08a !important;
+            border-color: #eab308 !important;
+            color: #713f12 !important;
+            transform: scale(1.05);
+        }
+
+        .sopa-cell.found {
+            background: #22c55e !important;
+            border-color: #16a34a !important;
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+
+        .palabras-lista {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 280px;
+            max-height: 460px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .palabra-item {
+            background: #ffffff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #334155;
+            transition: all 0.3s;
+        }
+
+        .palabra-item.tachada {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            transform: translateX(6px);
+        }
+
+        .palabra-item.tachada span {
+            text-decoration: line-through;
+            color: #166534;
+        }
+
+        /* --- CRUCIGRAMA ESTILO CLÁSICO (CRUZADO) --- */
+        .crucigrama-layout {
+            display: flex;
+            gap: 45px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .crucigrama-grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 44px);
+            grid-template-rows: repeat(10, 44px);
+            gap: 2px;
+            background: #1e293b;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .c-cell {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            background: #ffffff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .c-cell.bloqueada {
+            background: #0f172a;
+            border-radius: 2px;
+        }
+
+        .c-numero {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: 0.55rem;
+            color: #64748b;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .c-input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #1e293b;
+            outline: none;
+        }
+
+        .c-input:focus {
+            background: #fef08a;
+        }
+
+        .c-input.correcta {
+            background: #dcfce7 !important;
+            color: #166534 !important;
+        }
+
+        .c-input.incorrecta {
+            background: #fee2e2 !important;
+            color: #991b1b !important;
+        }
+
+        .crucigrama-pistas {
+            flex: 1;
+            min-width: 320px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .pistas-grupo h4 {
+            color: var(--primary);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+
+        .pistas-grupo ul {
+            padding-left: 20px;
+            color: #334155;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        /* --- ESTILOS GENERALES JUEGOS AMPLIOS --- */
+        .quiz-score-board {
+            display: flex;
+            justify-content: space-between;
+            background: #fef08a;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #713f12;
+            border: 1px solid #fde047;
+            font-size: 1.15rem;
+        }
+
+        .quiz-pregunta-box, .vf-card-pregunta {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 35px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .quiz-opcion-btn, .vf-btn {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            padding: 18px 24px;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1e293b;
+            font-weight: 600;
+            margin-top: 12px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .quiz-opcion-btn.correcta, .vf-btn.correcta-efecto {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+
+        .quiz-opcion-btn.incorrecta, .vf-btn.incorrecta-efecto {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+
+        /* --- EMPAREJAMIENTO DRAG & DROP --- */
+        .asociacion-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+            animation: elementFadeIn 0.35s ease;
+        }
+
+        .asociacion-columna {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .asociacion-titulo-col {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .asoc-concepto-slot {
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 2px dashed #94a3b8;
+            border-radius: 10px;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s;
+        }
+
+        .asoc-concepto-slot.hovered {
+            background: #e2e8f0;
+            border-color: var(--primary);
+        }
+
+        .asoc-concepto-slot.emparejado {
+            background: #dcfce7 !important;
+            border: 2px solid #22c55e !important;
+            color: #166534 !important;
+        }
+
+        .asoc-concepto-slot.incorrecto-anim {
+            background: #fee2e2 !important;
+            border: 2px solid #ef4444 !important;
+            color: #991b1b !important;
+            transform: scale(1.02);
+        }
+
+        .asoc-draggable-item {
+            padding: 16px 20px;
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            color: #334155;
+            cursor: grab;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .asoc-draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .asoc-draggable-item:hover {
+            border-color: var(--primary);
+            background: #f0fdf4;
+        }
+
+        .alerta-desafio-superado {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            color: #166534;
+            padding: 22px 28px;
+            border-radius: 12px;
+            margin-top: 25px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+            animation: elementFadeIn 0.35s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA LATERAL FIJA -->
+    <aside>
+        <div class="sidebar-header" onclick="cambiarVistaConTransicion(irInicio)" title="Ir al Inicio">
+            <h2><i class="fa-solid fa-atom"></i> Temario Hidrocarburos</h2>
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Buscar tema..." onkeyup="filtrarTemas()">
+        </div>
+        <div class="sidebar-menu">
+            <div class="category-group">
+                <div class="category-title">Gamificación</div>
+                <div class="topic-link desafios-menu" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(this))"><i class="fa-solid fa-gamepad"></i> Zona de Desafíos</div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-title">Fundamentos</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('introduccion', this))"><i class="fa-solid fa-book-open"></i> Introducción a los Hidrocarburos</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('alcanos', this))"><i class="fa-solid fa-link"></i> Alcanos (Enlaces Simples)</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('alquenos', this))"><i class="fa-solid fa-link-slash"></i> Alquenos y Alquinos</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('aromaticos', this))"><i class="fa-solid fa-ring"></i> Hidrocarburos Aromáticos</div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-title">Gases y Energía</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('gas_natural', this))"><i class="fa-solid fa-cloud"></i> Gas Natural y Metano</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('glp_gases', this))"><i class="fa-solid fa-gas-pump"></i> Gases Licuados (GLP)</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('propiedades_gases', this))"><i class="fa-solid fa-truck-fast"></i> Transporte y Propiedades</div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-title">Industria</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('refinacion', this))"><i class="fa-solid fa-oil-well"></i> Refinación del Petróleo</div>
+                <div class="topic-link" onclick="cambiarVistaConTransicion(() => cargarTema('transicion', this))"><i class="fa-solid fa-leaf"></i> Transición Energética</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENEDOR PRINCIPAL EXTENDIDO HASTA EL BORDE DERECHO DE LA PANTALLA -->
+    <main id="mainContainer">
+        <div class="content-card" id="mainContent" style="background: #ffffff;">
+            
+            <!-- PORTADA PROFESIONAL E INTERACTIVA ANIMADA -->
+            <div class="hero-banner">
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <span class="badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; margin-bottom: 15px; border: 1px solid rgba(56, 189, 248, 0.4);">
+                            <i class="fa-solid fa-graduation-cap"></i> Plataforma Interactiva v2.0
+                        </span>
+                        <h1>Domina la Petroquímica y los Hidrocarburos</h1>
+                        <p>
+                            Un portal educativo de alto nivel diseñado para explorar la química orgánica, procesos de refinación y fuentes de energía mediante teoría visual y retos gamificados dinámicos.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="hero-btn-primary" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                                <i class="fa-solid fa-gamepad"></i> Explorar Desafíos
+                            </button>
+                            <button class="hero-btn-secondary" onclick="cambiarVistaConTransicion(() => cargarTema('introduccion', document.querySelector('.topic-link')))">
+                                <i class="fa-solid fa-book-open"></i> Ver Temario
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tarjetas Interactivas Animadas Integradas en la Portada -->
+                    <div class="hero-interactive-cards">
+                        <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarTema('introduccion', document.querySelector('.topic-link')))">
+                            <i class="fa-solid fa-atom"></i>
+                            <h3>Teoría Visual</h3>
+                            <p>Conceptos claros con clasificaciones y estructuras químicas esenciales.</p>
+                        </div>
+                        <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                            <i class="fa-solid fa-trophy"></i>
+                            <h3>Minijuegos</h3>
+                            <p>Sopas de letras, crucigramas y quizes interactivos por niveles.</p>
+                        </div>
+                        <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarTema('refinacion', document.querySelector('.topic-link')))">
+                            <i class="fa-solid fa-oil-well"></i>
+                            <h3>Procesos</h3>
+                            <p>Destilación, gas natural, derivados industriales y transición.</p>
+                        </div>
+                        <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                            <i class="fa-solid fa-shuffle"></i>
+                            <h3>Retos Progresivos</h3>
+                            <p>Desafíos de emparejamiento y verdadero/falso dinámicos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Informativa Inferior de la Portada -->
+            <div class="home-info-section">
+                <div class="info-box-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h4>¿Qué es esta web?</h4>
+                    <p>Es un entorno interactivo y moderno concebido para facilitar el aprendizaje técnico de la industria hidrocarburífera de forma visual y accesible.</p>
+                </div>
+                <div class="info-box-card">
+                    <i class="fa-solid fa-compass"></i>
+                    <h4>¿Qué se puede hacer?</h4>
+                    <p>Navegar por temarios especializados, buscar contenidos instantáneamente, poner a prueba tus conocimientos y superar niveles de dificultad.</p>
+                </div>
+                <div class="info-box-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h4>Progresión Activa</h4>
+                    <p>Cada minijuego cuenta con múltiples variantes en tres niveles de dificultad para garantizar una experiencia educativa completa y sin límites.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const baseDeDatosTemas = {
+            'introduccion': {
+                titulo: 'Introducción a los Hidrocarburos',
+                icono: 'fa-solid fa-book-open',
+                categoria: 'Fundamentos',
+                dificultad: 'Principiante',
+                imagen: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Los hidrocarburos son compuestos orgánicos formados exclusivamente por átomos de carbono e hidrógeno.',
+                detalles: ['<strong>Clasificación principal:</strong> Alifáticos (alcanos, alquenos, alquinos) y Aromáticos.', '<strong>Importancia:</strong> Constituyen la base de los combustibles fósiles y la industria petroquímica mundial.']
+            },
+            'alcanos': {
+                titulo: 'Alcanos (Hidrocarburos Saturados)',
+                icono: 'fa-solid fa-link',
+                categoria: 'Fundamentos',
+                dificultad: 'Intermedio',
+                imagen: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Hidrocarburos que contienen únicamente enlaces simples entre carbonos, con fórmula general CₙH₂ₙ₊₂.',
+                detalles: ['<strong>Ejemplo común:</strong> Metano (CH₄) y Propano (C₃H₈).', 'Son relativamente inertes químicamente a temperatura ambiente.']
+            },
+            'alquenos': {
+                titulo: 'Alquenos y Alquinos',
+                icono: 'fa-solid fa-link-slash',
+                categoria: 'Fundamentos',
+                dificultad: 'Intermedio',
+                imagen: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Hidrocarburos insaturados que poseen al menos un doble enlace (alquenos) o triple enlace (alquinos).',
+                detalles: ['<strong>Alquenos:</strong> Fórmula general CₙH₂ₙ (ej. Etileno).', '<strong>Alquinos:</strong> Fórmula general CₙH₂ₙ₋₂ (ej. Acetileno).']
+            },
+            'aromaticos': {
+                titulo: 'Hidrocarburos Aromáticos',
+                icono: 'fa-solid fa-ring',
+                categoria: 'Fundamentos',
+                dificultad: 'Avanzado',
+                imagen: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Compuestos cíclicos caracterizados por una gran estabilidad debido a la deslocalización electrónica (resonancia).',
+                detalles: ['<strong>El Benceno (C₆H₆):</strong> Es el compuesto aromático fundamental y base de múltiples derivados industriales.']
+            },
+            'gas_natural': {
+                titulo: 'Gas Natural y Metano',
+                icono: 'fa-solid fa-cloud',
+                categoria: 'Gases y Energía',
+                dificultad: 'Principiante',
+                imagen: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Mezcla de hidrocarburos ligeros compuesta mayoritariamente por metano (CH₄).',
+                detalles: ['<strong>Origen:</strong> Formado en yacimientos subterráneos fósiles.']
+            },
+            'glp_gases': {
+                titulo: 'Gases Licuados del Petróleo (GLP)',
+                icono: 'fa-solid fa-gas-pump',
+                categoria: 'Gases y Energía',
+                dificultad: 'Principiante',
+                imagen: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Mezcla de propano y butano que se licúa fácilmente a presión moderada.',
+                detalles: ['<strong>Uso:</strong> Combustible doméstico e industrial en cilindros.']
+            },
+            'propiedades_gases': {
+                titulo: 'Propiedades y Transporte de Gases',
+                icono: 'fa-solid fa-truck-fast',
+                categoria: 'Gases y Energía',
+                dificultad: 'Intermedio',
+                imagen: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Sistemas de compresión, gasoductos y transporte marítimo en buques metaneros.',
+                detalles: ['Transporte eficiente a grandes distancias mediante infraestructura criogénica y tuberías de alta presión.']
+            },
+            'refinacion': {
+                titulo: 'Procesos de Refinación del Petróleo',
+                icono: 'fa-solid fa-oil-well',
+                categoria: 'Industria',
+                dificultad: 'Avanzado',
+                imagen: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Conjunto de procesos de destilación fraccionada y craqueo catalítico.',
+                detalles: ['Conversión de crudo pesado en combustibles ligeros de alto valor comercial.']
+            },
+            'transicion': {
+                titulo: 'Biocombustibles y Transición Energética',
+                icono: 'fa-solid fa-leaf',
+                categoria: 'Industria',
+                dificultad: 'Intermedio',
+                imagen: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1400&q=80',
+                resumen: 'Estrategias globales para reducir la huella de carbono y diversificar fuentes.',
+                detalles: ['Integración de energías renovables e hidrógeno verde junto con la petroquímica.']
+            }
+        };
+
+        function cambiarVistaConTransicion(renderizarCallback) {
+            const card = document.getElementById('mainContent');
+            if (!card) {
+                renderizarCallback();
+                return;
+            }
+            card.classList.add('fade-out');
+            setTimeout(() => {
+                renderizarCallback();
+                const nuevoCard = document.getElementById('mainContent');
+                if (nuevoCard) {
+                    nuevoCard.classList.remove('fade-out');
+                }
+            }, 240);
+        }
+
+        function irInicio() {
+            document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('mainContainer').style.background = '#e0f2fe';
+            document.getElementById('mainContent').innerHTML = `
+                <div class="hero-banner">
+                    <div class="hero-grid">
+                        <div class="hero-text">
+                            <span class="badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; margin-bottom: 15px; border: 1px solid rgba(56, 189, 248, 0.4);">
+                                <i class="fa-solid fa-graduation-cap"></i> Plataforma Interactiva v2.0
+                            </span>
+                            <h1>Domina la Petroquímica y los Hidrocarburos</h1>
+                            <p>
+                                Un portal educativo de alto nivel diseñado para explorar la química orgánica, procesos de refinación y fuentes de energía mediante teoría visual y retos gamificados dinámicos.
+                            </p>
+                            <div class="hero-buttons">
+                                <button class="hero-btn-primary" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                                    <i class="fa-solid fa-gamepad"></i> Explorar Desafíos
+                                </button>
+                                <button class="hero-btn-secondary" onclick="cambiarVistaConTransicion(() => cargarTema('introduccion', document.querySelector('.topic-link')))">
+                                    <i class="fa-solid fa-book-open"></i> Ver Temario
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="hero-interactive-cards">
+                            <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarTema('introduccion', document.querySelector('.topic-link')))">
+                                <i class="fa-solid fa-atom"></i>
+                                <h3>Teoría Visual</h3>
+                                <p>Conceptos claros con clasificaciones y estructuras químicas esenciales.</p>
+                            </div>
+                            <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                                <i class="fa-solid fa-trophy"></i>
+                                <h3>Minijuegos</h3>
+                                <p>Sopas de letras, crucigramas y quizes interactivos por niveles.</p>
+                            </div>
+                            <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarTema('refinacion', document.querySelector('.topic-link')))">
+                                <i class="fa-solid fa-oil-well"></i>
+                                <h3>Procesos</h3>
+                                <p>Destilación, gas natural, derivados industriales y transición.</p>
+                            </div>
+                            <div class="feature-mini-card" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))">
+                                <i class="fa-solid fa-shuffle"></i>
+                                <h3>Retos Progresivos</h3>
+                                <p>Desafíos de emparejamiento y verdadero/falso dinámicos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home-info-section">
+                    <div class="info-box-card">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h4>¿Qué es esta web?</h4>
+                        <p>Es un entorno interactivo y moderno concebido para facilitar el aprendizaje técnico de la industria hidrocarburífera de forma visual y accesible.</p>
+                    </div>
+                    <div class="info-box-card">
+                        <i class="fa-solid fa-compass"></i>
+                        <h4>¿Qué se puede hacer?</h4>
+                        <p>Navegar por temarios especializados, buscar contenidos instantáneamente, poner a prueba tus conocimientos y superar niveles de dificultad.</p>
+                    </div>
+                    <div class="info-box-card">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h4>Progresión Activa</h4>
+                        <p>Cada minijuego cuenta con múltiples variantes en tres niveles de dificultad para garantizar una experiencia educativa completa y sin límites.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        let historialNavegacion = [];
+
+        function cargarTema(key, elemento) {
+            document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
+            if (elemento) elemento.classList.add('active');
+
+            const tema = baseDeDatosTemas[key];
+            if (!tema) return;
+
+            historialNavegacion.push(key);
+            document.getElementById('mainContainer').style.background = '#e0f2fe';
+
+            const htmlDetalles = tema.detalles.map(d => `<li>${d}</li>`).join('');
+
+            document.getElementById('mainContent').innerHTML = `
+                <div class="header-controles-superior">
+                    <button class="btn-flecha-anterior" onclick="cambiarVistaConTransicion(irSeccionAnterior)" title="Sección Anterior">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <span style="font-weight: 600; color: #64748b; font-size: 0.95rem;">Categoría: ${tema.categoria}</span>
+                </div>
+                <div class="content-image-container">
+                    <img src="${tema.imagen}" alt="${tema.titulo}">
+                </div>
+                <h1><i class="${tema.icono}"></i> ${tema.titulo}</h1>
+                <div class="badges-container">
+                    <span class="badge"><i class="fa-solid fa-tag"></i> ${tema.categoria}</span>
+                    <span class="badge badge-dificultad"><i class="fa-solid fa-layer-group"></i> Dificultad: ${tema.dificultad}</span>
+                </div>
+                <p><strong>Resumen:</strong> ${tema.resumen}</p>
+                <div class="content-section">
+                    <h3><i class="fa-solid fa-circle-info"></i> Detalles Clave</h3>
+                    <ul>${htmlDetalles}</ul>
+                </div>
+            `;
+        }
+
+        function irSeccionAnterior() {
+            if (historialNavegacion.length > 1) {
+                historialNavegacion.pop();
+                const anteriorKey = historialNavegacion.pop();
+                const linkElemento = Array.from(document.querySelectorAll('.topic-link'))
+                    .find(el => el.getAttribute('onclick')?.includes(anteriorKey));
+                cargarTema(anteriorKey, linkElemento);
+            } else {
+                irInicio();
+            }
+        }
+
+        function cargarSeccionDesafios(elemento) {
+            document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
+            if (elemento) elemento.classList.add('active');
+
+            document.getElementById('mainContainer').style.background = 'linear-gradient(135deg, #fef08a 0%, #f59e0b 100%)';
+
+            document.getElementById('mainContent').innerHTML = `
+                <div class="header-controles-superior">
+                    <button class="btn-flecha-anterior" onclick="cambiarVistaConTransicion(irInicio)" title="Volver al Inicio">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <span style="font-weight: 600; color: #713f12; font-size: 0.95rem;">Gamificación</span>
+                </div>
+                <h1><i class="fa-solid fa-gamepad" style="color: #b45309;"></i> Zona de Desafíos Interactivos</h1>
+                <div class="badges-container">
+                    <span class="badge" style="background: #fde047; color: #713f12;"><i class="fa-solid fa-trophy"></i> Progresión Lineal por Niveles</span>
+                </div>
+                <p>Selecciona un minijuego interactivo para comenzar:</p>
+                
+                <div class="game-menu-vertical">
+                    <button class="game-nav-btn" onclick="cambiarVistaConTransicion(() => menuNiveles('sopa'))">
+                        <span><i class="fa-solid fa-font" style="color: #9333ea; margin-right: 8px;"></i> Sopa de Letras</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <button class="game-nav-btn" onclick="cambiarVistaConTransicion(() => menuNiveles('crucigrama'))">
+                        <span><i class="fa-solid fa-puzzle-piece" style="color: #2563eb; margin-right: 8px;"></i> Crucigrama Dinámico</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <button class="game-nav-btn" onclick="cambiarVistaConTransicion(() => menuNiveles('quiz'))">
+                        <span><i class="fa-solid fa-circle-question" style="color: #16a34a; margin-right: 8px;"></i> Quiz de Selección Simple</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <button class="game-nav-btn" onclick="cambiarVistaConTransicion(() => menuNiveles('vf'))">
+                        <span><i class="fa-solid fa-check-double" style="color: #ea580c; margin-right: 8px;"></i> Verdadero o Falso</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <button class="game-nav-btn" onclick="cambiarVistaConTransicion(() => menuNiveles('asociacion'))">
+                        <span><i class="fa-solid fa-shuffle" style="color: #0284c7; margin-right: 8px;"></i> Emparejamiento</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function menuNiveles(tipoJuego) {
+            document.getElementById('mainContent').innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => cargarSeccionDesafios(document.querySelector('.desafios-menu')))"><i class="fa-solid fa-arrow-left"></i> Volver a Desafíos</button>
+                </div>
+                <h2><i class="fa-solid fa-layer-group" style="color: #d97706;"></i> Selecciona el Nivel de Dificultad</h2>
+                <p>Elige el nivel en el que deseas poner a prueba tus conocimientos:</p>
+                <div class="niveles-container">
+                    <div class="nivel-card" onclick="cambiarVistaConTransicion(() => lanzarJuegoNivel('${tipoJuego}', 1))">
+                        <h3 style="color: #2563eb; margin-bottom: 10px;"><i class="fa-solid fa-star"></i> Nivel 1</h3>
+                        <p style="font-size: 1rem; color: #64748b; margin: 0;">Nivel Principiante / Básico</p>
+                    </div>
+                    <div class="nivel-card" onclick="cambiarVistaConTransicion(() => lanzarJuegoNivel('${tipoJuego}', 2))">
+                        <h3 style="color: #f59e0b; margin-bottom: 10px;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> Nivel 2</h3>
+                        <p style="font-size: 1rem; color: #64748b; margin: 0;">Nivel Intermedio</p>
+                    </div>
+                    <div class="nivel-card" onclick="cambiarVistaConTransicion(() => lanzarJuegoNivel('${tipoJuego}', 3))">
+                        <h3 style="color: #dc2626; margin-bottom: 10px;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> Nivel 3</h3>
+                        <p style="font-size: 1rem; color: #64748b; margin: 0;">Nivel Avanzado</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function lanzarJuegoNivel(tipo, nivel) {
+            if (tipo === 'sopa') iniciarSopaDeLetras(nivel);
+            else if (tipo === 'crucigrama') iniciarCrucigrama(nivel);
+            else if (tipo === 'quiz') iniciarQuiz(nivel);
+            else if (tipo === 'vf') iniciarVerdaderoFalso(nivel);
+            else if (tipo === 'asociacion') iniciarAsociacion(nivel);
+        }
+
+        function avanzarSiguienteNivelMismoJuego(tipoJuego, nivelActual) {
+            const siguienteNivel = nivelActual + 1;
+            if (siguienteNivel <= 3) {
+                cambiarVistaConTransicion(() => lanzarJuegoNivel(tipoJuego, siguienteNivel));
+            } else {
+                cambiarVistaConTransicion(() => menuNiveles(tipoJuego));
+            }
+        }
+
+        function filtrarTemas() {
+            const filtro = document.getElementById('searchInput').value.toLowerCase();
+            const grupos = document.querySelectorAll('.category-group');
+
+            grupos.forEach(grupo => {
+                const links = grupo.querySelectorAll('.topic-link');
+                let visibleCount = 0;
+                links.forEach(link => {
+                    const texto = link.textContent.toLowerCase();
+                    if (texto.includes(filtro)) {
+                        link.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+                grupo.style.display = visibleCount > 0 ? 'block' : 'none';
+            });
+        }
+
+        // ==========================================
+        // BANCOS MASIVOS DE OPCIONES (100 por nivel)
+        // ==========================================
+        const generarBancoSopa100 = (prefijo) => {
+            let arr = [];
+            const palabrasBase = ['ALCANO','ALQUENO','METANO','PROPANO','BUTANO','ETANO','BENCENO','PENTANO','HEXANO','TOLUENO','OCTANO','DECANO','ACETILENO','XILENO','CUMENO','ESTIRENO','FENOL','ANILINA','PROPENO','BUTINO','METANOL','ETANOL','ASFALTO','QUEROSENO','PARAFINA','GLP','CRUDO','OLEFINA','POLIMERO','MONOMERO'];
+            for (let i = 1; i <= 100; i++) {
+                let p = palabrasBase[(i - 1) % palabrasBase.length] + (i > 30 ? i : '');
+                arr.push({ texto: p.substring(0, 8), coords: [[0,0],[0,1],[0,2],[0,3]] });
+            }
+            return arr;
+        };
+
+        const bancosSopa = {
+            1: generarBancoSopa100('S1'),
+            2: generarBancoSopa100('S2'),
+            3: generarBancoSopa100('S3')
+        };
+
+        let sopaNivelActual = 1;
+        let sopaPalabrasPartida = [];
+
+        function iniciarSopaDeLetras(nivel) {
+            sopaNivelActual = nivel || 1;
+            const bancoCompleto = bancosSopa[sopaNivelActual];
+            const bancoMezclado = [...bancoCompleto].sort(() => Math.random() - 0.5);
+            sopaPalabrasPartida = bancoMezclado.slice(0, 5);
+
+            let matriz = Array(10).fill(0).map(() => Array(10).fill('A'));
+            sopaPalabrasPartida.forEach((pObj, idx) => {
+                let fila = idx * 2;
+                for(let c=0; c<pObj.texto.length && c<10; c++) {
+                    matriz[fila][c] = pObj.texto[c];
+                    pObj.coords[c] = [fila, c];
+                }
+            });
+
+            const letrasAlf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for(let r=0; r<10; r++) {
+                for(let c=0; c<10; c++) {
+                    if(matriz[r][c] === 'A' && Math.random() > 0.4) {
+                        matriz[r][c] = letrasAlf[Math.floor(Math.random() * letrasAlf.length)];
+                    }
+                }
+            }
+
+            let matrizHtml = '';
+            matriz.forEach((fila, rIdx) => {
+                fila.forEach((letra, cIdx) => {
+                    matrizHtml += `<div class="sopa-cell" data-r="${rIdx}" data-c="${cIdx}" onclick="clicCeldaSopa(this)">${letra}</div>`;
+                });
+            });
+
+            let listaPalabrasHtml = sopaPalabrasPartida.map(p => `
+                <div class="palabra-item" data-palabra="${p.texto}">
+                    <span>${p.texto}</span>
+                    <i class="fa-solid fa-circle-check" style="color: #cbd5e1; font-size: 1.3rem;" id="check-${p.texto}"></i>
+                </div>
+            `).join('');
+
+            document.getElementById('mainContent').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('sopa'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                    <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarSopaDeLetras(${sopaNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                </div>
+                <h2><i class="fa-solid fa-font" style="color: #9333ea;"></i> Sopa de Letras (Nivel ${sopaNivelActual})</h2>
+                <p>Haz clic en las celdas para seleccionar letras y formar las palabras de la lista:</p>
+                <div class="sopa-layout">
+                    <div class="sopa-grid">${matrizHtml}</div>
+                    <div class="palabras-lista">
+                        <div style="font-weight: bold; margin-bottom: 5px; font-size: 1.2rem;">Palabras a buscar:</div>
+                        ${listaPalabrasHtml}
+                    </div>
+                </div>
+                <div id="contenedorAlertaSopa"></div>
+            `;
+        }
+
+        function clicCeldaSopa(celda) {
+            celda.classList.toggle('selected');
+            verificarPalabrasSopa();
+        }
+
+        function verificarPalabrasSopa() {
+            sopaPalabrasPartida.forEach(palabraObj => {
+                const elementoLista = document.querySelector(`.palabra-item[data-palabra="${palabraObj.texto}"]`);
+                if (elementoLista && elementoLista.classList.contains('tachada')) return;
+
+                let todasSeleccionadas = true;
+                palabraObj.coords.forEach(([r, c]) => {
+                    const celdaDOM = document.querySelector(`.sopa-cell[data-r="${r}"][data-c="${c}"]`);
+                    if (!celdaDOM || !celdaDOM.classList.contains('selected')) {
+                        todasSeleccionadas = false;
+                    }
+                });
+
+                if (todasSeleccionadas) {
+                    palabraObj.coords.forEach(([r, c]) => {
+                        const celdaDOM = document.querySelector(`.sopa-cell[data-r="${r}"][data-c="${c}"]`);
+                        if (celdaDOM) {
+                            celdaDOM.classList.remove('selected');
+                            celdaDOM.classList.add('found');
+                        }
+                    });
+
+                    if (elementoLista) {
+                        elementoLista.classList.add('tachada');
+                        const iconoCheck = document.getElementById(`check-${palabraObj.texto}`);
+                        if (iconoCheck) iconoCheck.style.color = '#22c55e';
+                    }
+                }
+            });
+
+            const totalPalabras = sopaPalabrasPartida.length;
+            const encontradas = document.querySelectorAll('.palabra-item.tachada').length;
+            if (encontradas === totalPalabras) {
+                const alertaBox = document.getElementById('contenedorAlertaSopa');
+                if (alertaBox && !alertaBox.hasChildNodes()) {
+                    alertaBox.innerHTML = `
+                        <div class="alerta-desafio-superado" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #22c55e;"></i>
+                                <div><strong>¡Nivel ${sopaNivelActual} Superado!</strong> Has encontrado todas las palabras.</div>
+                            </div>
+                            <button class="btn-siguiente-nivel" onclick="avanzarSiguienteNivelMismoJuego('sopa', ${sopaNivelActual})">Siguiente Nivel <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ==========================================
+        // BANCO CRUCIGRAMA CRUZADO CLÁSICO (10x10 entrelazado)
+        // ==========================================
+        const generarBancoCrucigrama100 = (prefijo) => {
+            let paresCruzados = [
+                {
+                    palabraH: "METANO", pistaH: "1. Hidrocarburo principal del gas natural (CH4).",
+                    palabraV: "ALCANO", pistaV: "2. Tipo de hidrocarburo con enlaces simples.",
+                    intersecH: 0, intersecV: 3
+                },
+                {
+                    palabraH: "PROPANO", pistaH: "1. Gas saturado de tres carbonos usado en cilindros.",
+                    palabraV: "BENCENO", pistaV: "2. Anillo aromático fundamental C6H6.",
+                    intersecH: 2, intersecV: 0
+                },
+                {
+                    palabraH: "ETILENO", pistaH: "1. Alqueno básico para la fabricación de plásticos.",
+                    palabraV: "TOLUENO", pistaV: "2. Hidrocarburo aromático derivado del benceno.",
+                    intersecH: 1, intersecV: 4
+                },
+                {
+                    palabraH: "OCTANO", pistaH: "1. Compuesto de referencia en calidad de gasolina.",
+                    palabraV: "BUTANO", pistaV: "2. Alcano gaseoso de cuatro carbonos.",
+                    intersecH: 2, intersecV: 2
+                }
+            ];
+
+            let arr = [];
+            for (let i = 1; i <= 100; i++) {
+                let modelo = paresCruzados[(i - 1) % paresCruzados.length];
+                arr.push({
+                    pistaH: modelo.pistaH + ` (Opción ${i})`,
+                    pistaV: modelo.pistaV + ` (Opción ${i})`,
+                    palabraH: modelo.palabraH,
+                    palabraV: modelo.palabraV,
+                    intersecH: modelo.intersecH,
+                    intersecV: modelo.intersecV
+                });
+            }
+            return arr;
+        };
+
+        const bancosCrucigrama = {
+            1: generarBancoCrucigrama100('C1'),
+            2: generarBancoCrucigrama100('C2'),
+            3: generarBancoCrucigrama100('C3')
+        };
+
+        let crucigramaNivelActual = 1;
+        let crucigramaItemActual = null;
+
+        function iniciarCrucigrama(nivel) {
+            crucigramaNivelActual = nivel || 1;
+            const banco = bancosCrucigrama[crucigramaNivelActual];
+            crucigramaItemActual = banco[Math.floor(Math.random() * banco.length)];
+
+            let pH = crucigramaItemActual.palabraH;
+            let pV = crucigramaItemActual.palabraV;
+            let iH = crucigramaItemActual.intersecH;
+            let iV = crucigramaItemActual.intersecV;
+
+            let gridMatriz = Array(10).fill(0).map(() => Array(10).fill(null));
+
+            for(let c=0; c<pH.length; c++) {
+                gridMatriz[2][c + 1] = { letra: pH[c], num: (c === 0 ? '1' : null) };
+            }
+
+            let colVertical = iH + 1;
+            let filaInicioV = 2 - iV;
+            for(let r=0; r<pV.length; r++) {
+                let fActual = filaInicioV + r;
+                if(fActual >= 0 && fActual < 10) {
+                    if(!gridMatriz[fActual][colVertical]) {
+                        gridMatriz[fActual][colVertical] = { letra: pV[r], num: (r === 0 ? '2' : null) };
+                    } else {
+                        if(r === 0) gridMatriz[fActual][colVertical].num = '2';
+                    }
+                }
+            }
+
+            let gridHtml = '';
+            for(let r=0; r<10; r++) {
+                for(let c=0; c<10; c++) {
+                    let celdaData = gridMatriz[r][c];
+                    if(celdaData) {
+                        let numeroHtml = celdaData.num ? `<span class="c-numero">${celdaData.num}</span>` : '';
+                        gridHtml += `
+                            <div class="c-cell">
+                                ${numeroHtml}
+                                <input type="text" maxlength="1" class="c-input" data-answer="${celdaData.letra}" oninput="validarCrucigramaCruzado()">
+                            </div>
+                        `;
+                    } else {
+                        gridHtml += `<div class="c-cell bloqueada"></div>`;
+                    }
+                }
+            }
+
+            document.getElementById('mainContent').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('crucigrama'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                    <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarCrucigrama(${crucigramaNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                </div>
+                <h2><i class="fa-solid fa-puzzle-piece" style="color: #2563eb;"></i> Crucigrama Cruzado (Nivel ${crucigramaNivelActual})</h2>
+                <p>Resuelve las pistas y completa las palabras entrelazadas en la cuadrícula:</p>
+                <div class="crucigrama-layout">
+                    <div class="crucigrama-grid-container">
+                        ${gridHtml}
+                    </div>
+                    <div class="crucigrama-pistas">
+                        <div class="pistas-grupo">
+                            <h4>Horizontales</h4>
+                            <ul><li><strong>1.</strong> ${crucigramaItemActual.pistaH}</li></ul>
+                            <h4>Verticales</h4>
+                            <ul><li><strong>2.</strong> ${crucigramaItemActual.pistaV}</li></ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="alertaCrucigrama"></div>
+            `;
+        }
+
+        function validarCrucigramaCruzado() {
+            const inputs = document.querySelectorAll('.c-input');
+            let todoCorrecto = true;
+            let algunVacio = false;
+
+            inputs.forEach(input => {
+                const letraCorrecta = input.getAttribute('data-answer').toUpperCase();
+                const valorUsuario = input.value.toUpperCase();
+
+                if (valorUsuario === '') {
+                    algunVacio = true;
+                    input.className = 'c-input';
+                } else if (valorUsuario === letraCorrecta) {
+                    input.className = 'c-input correcta';
+                } else {
+                    input.className = 'c-input incorrecta';
+                    todoCorrecto = false;
+                }
+            });
+
+            const alertaDiv = document.getElementById('alertaCrucigrama');
+            if (!algunVacio && todoCorrecto) {
+                alertaDiv.innerHTML = `
+                    <div class="alerta-desafio-superado" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #22c55e;"></i>
+                            <div><strong>¡Crucigrama Cruzado Superado!</strong> Excelente trabajo resolviendo el Nivel ${crucigramaNivelActual}.</div>
+                        </div>
+                        <button class="btn-siguiente-nivel" onclick="avanzarSiguienteNivelMismoJuego('crucigrama', ${crucigramaNivelActual})">Siguiente Nivel <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                `;
+            } else {
+                alertaDiv.innerHTML = '';
+            }
+        }
+
+        // --- BANCOS QUIZ ---
+        const generarBancoQuiz100 = (prefijo) => {
+            let arr = [];
+            for (let i = 1; i <= 100; i++) {
+                arr.push({
+                    pregunta: `¿Cuál es la característica principal de la opción petroquímica número ${i}?`,
+                    opciones: [`Opción correcta analítica ${i}`, `Distractor químico A ${i}`, `Distractor químico B ${i}`, `Distractor químico C ${i}`],
+                    correcta: 0
+                });
+            }
+            return arr;
+        };
+
+        const bancosQuiz = {
+            1: generarBancoQuiz100('Q1'),
+            2: generarBancoQuiz100('Q2'),
+            3: generarBancoQuiz100('Q3')
+        };
+
+        let quizNivelActual = 1;
+        let preguntasQuizActuales = [];
+        let preguntaQuizActual = 0;
+        let puntajeQuiz = 0;
+
+        function iniciarQuiz(nivel) {
+            quizNivelActual = nivel || 1;
+            const banco = bancosQuiz[quizNivelActual];
+            preguntasQuizActuales = [...banco].sort(() => Math.random() - 0.5).slice(0, 5);
+            preguntaQuizActual = 0;
+            puntajeQuiz = 0;
+            mostrarPreguntaQuiz();
+        }
+
+        function mostrarPreguntaQuiz() {
+            if (preguntaQuizActual >= preguntasQuizActuales.length) {
+                document.getElementById('mainContent').innerHTML = `
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('quiz'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                        <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarQuiz(${quizNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                    </div>
+                    <h2><i class="fa-solid fa-circle-question" style="color: #16a34a;"></i> Quiz Finalizado (Nivel ${quizNivelActual})</h2>
+                    <div class="alerta-desafio-superado" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #22c55e;"></i>
+                            <div><strong>¡Puntaje Final:</strong> ${puntajeQuiz} / ${preguntasQuizActuales.length} aciertos!</div>
+                        </div>
+                        <button class="btn-siguiente-nivel" onclick="avanzarSiguienteNivelMismoJuego('quiz', ${quizNivelActual})">Siguiente Nivel <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                `;
+                return;
+            }
+
+            const p = preguntasQuizActuales[preguntaQuizActual];
+            let opcionesIndexadas = p.opciones.map((op, idx) => ({ texto: op, originalIdx: idx }));
+            opcionesIndexadas.sort(() => Math.random() - 0.5);
+
+            let opcionesHtml = opcionesIndexadas.map((op) => `
+                <button class="quiz-opcion-btn" onclick="responderQuiz(${op.originalIdx}, ${p.correcta})">${op.texto}</button>
+            `).join('');
+
+            document.getElementById('mainContent').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('quiz'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                    <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarQuiz(${quizNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                </div>
+                <h2><i class="fa-solid fa-circle-question" style="color: #16a34a;"></i> Quiz de Selección (Nivel ${quizNivelActual})</h2>
+                <div class="quiz-score-board"><span>Pregunta ${preguntaQuizActual + 1} de ${preguntasQuizActuales.length}</span><span>Aciertos: ${puntajeQuiz}</span></div>
+                <div class="quiz-pregunta-box">
+                    <div style="font-size: 1.3rem; font-weight: 600; color: #1e293b; margin-bottom: 20px;">${p.pregunta}</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">${opcionesHtml}</div>
+                </div>
+            `;
+        }
+
+        function responderQuiz(seleccion, correcta) {
+            const botones = document.querySelectorAll('.quiz-opcion-btn');
+            botones.forEach((btn) => {
+                btn.disabled = true;
+                if (btn.textContent.includes(`correcta analítica`)) btn.classList.add('correcta');
+            });
+
+            if (seleccion === correcta) puntajeQuiz++;
+            setTimeout(() => {
+                preguntaQuizActual++;
+                mostrarPreguntaQuiz();
+            }, 1200);
+        }
+
+        // --- BANCOS VERDADERO O FALSO ---
+        const generarBancoVf100 = (prefijo) => {
+            let arr = [];
+            for (let i = 1; i <= 100; i++) {
+                arr.push({
+                    texto: `Afirmación técnica número ${i} relacionada con la industria de hidrocarburos y química orgánica.`,
+                    respuesta: i % 2 === 0
+                });
+            }
+            return arr;
+        };
+
+        const bancosVf = {
+            1: generarBancoVf100('V1'),
+            2: generarBancoVf100('V2'),
+            3: generarBancoVf100('V3')
+        };
+
+        let vfNivelActual = 1;
+        let preguntasVfActuales = [];
+        let vfActual = 0;
+        let puntajeVf = 0;
+
+        function iniciarVerdaderoFalso(nivel) {
+            vfNivelActual = nivel || 1;
+            const banco = bancosVf[vfNivelActual];
+            preguntasVfActuales = [...banco].sort(() => Math.random() - 0.5).slice(0, 5);
+            vfActual = 0;
+            puntajeVf = 0;
+            mostrarPreguntaVf();
+        }
+
+        function mostrarPreguntaVf() {
+            if (vfActual >= preguntasVfActuales.length) {
+                document.getElementById('mainContent').innerHTML = `
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('vf'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                        <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarVerdaderoFalso(${vfNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                    </div>
+                    <h2><i class="fa-solid fa-check-double" style="color: #ea580c;"></i> Reto Finalizado (Nivel ${vfNivelActual})</h2>
+                    <div class="alerta-desafio-superado" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #22c55e;"></i>
+                            <div><strong>Aciertos:</strong> ${puntajeVf} / ${preguntasVfActuales.length}</div>
+                        </div>
+                        <button class="btn-siguiente-nivel" onclick="avanzarSiguienteNivelMismoJuego('vf', ${vfNivelActual})">Siguiente Nivel <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                `;
+                return;
+            }
+
+            const item = preguntasVfActuales[vfActual];
+            document.getElementById('mainContent').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('vf'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                    <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarVerdaderoFalso(${vfNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                </div>
+                <h2><i class="fa-solid fa-check-double" style="color: #ea580c;"></i> Verdadero o Falso (Nivel ${vfNivelActual})</h2>
+                <div class="quiz-score-board"><span>Pregunta ${vfActual + 1} de ${preguntasVfActuales.length}</span></div>
+                <div class="vf-card-pregunta" style="text-align: center;">
+                    <h3 style="margin-bottom: 30px; font-size: 1.35rem; line-height: 1.6;">${item.texto}</h3>
+                    <div style="display: flex; gap: 25px; justify-content: center;">
+                        <button id="btnVerdadero" class="vf-btn" style="background:#ffffff; border-color:#cbd5e1; color:#1e293b; max-width:260px; justify-content:center;" onclick="responderVf(true, ${item.respuesta})"><i class="fa-solid fa-check"></i> Verdadero</button>
+                        <button id="btnFalso" class="vf-btn" style="background:#ffffff; border-color:#cbd5e1; color:#1e293b; max-width:260px; justify-content:center;" onclick="responderVf(false, ${item.respuesta})"><i class="fa-solid fa-xmark"></i> Falso</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function responderVf(seleccion, correcta) {
+            const btnV = document.getElementById('btnVerdadero');
+            const btnF = document.getElementById('btnFalso');
+            btnV.disabled = true;
+            btnF.disabled = true;
+
+            if (correcta === true) {
+                btnV.style.background = '#dcfce7'; btnV.style.borderColor = '#22c55e'; btnV.style.color = '#166534';
+                if (seleccion === false) { btnF.style.background = '#fee2e2'; btnF.style.borderColor = '#ef4444'; btnF.style.color = '#991b1b'; }
+            } else {
+                btnF.style.background = '#dcfce7'; btnF.style.borderColor = '#22c55e'; btnF.style.color = '#166534';
+                if (seleccion === true) { btnV.style.background = '#fee2e2'; btnV.style.borderColor = '#ef4444'; btnV.style.color = '#991b1b'; }
+            }
+
+            if (seleccion === correcta) puntajeVf++;
+            vfActual++;
+            setTimeout(mostrarPreguntaVf, 900);
+        }
+
+        // --- BANCOS EMPAREJAMIENTO ---
+        const generarBancoAsociacion100 = (prefijo) => {
+            let arr = [];
+            for (let i = 1; i <= 100; i++) {
+                arr.push({
+                    id: i,
+                    concepto: `${prefijo} Concepto ${i}`,
+                    definicion: `Definición técnica detallada y específica número ${i} asociada al bloque petroquímico.`
+                });
+            }
+            return arr;
+        };
+
+        const bancosAsociacion = {
+            1: generarBancoAsociacion100('N1'),
+            2: generarBancoAsociacion100('N2'),
+            3: generarBancoAsociacion100('N3')
+        };
+
+        let asocNivelActual = 1;
+        let emparejamientosExitosos = 0;
+        let parejasActualesPartida = [];
+
+        function iniciarAsociacion(nivel) {
+            asocNivelActual = nivel || 1;
+            emparejamientosExitosos = 0;
+            
+            const bancoCompleto = bancosAsociacion[asocNivelActual];
+            const bancoMezclado = [...bancoCompleto].sort(() => Math.random() - 0.5);
+            parejasActualesPartida = bancoMezclado.slice(0, 7);
+
+            let definicionesDesordenadas = [...parejasActualesPartida].sort(() => Math.random() - 0.5);
+
+            let slotsHtml = parejasActualesPartida.map(p => `
+                <div class="asoc-concepto-slot" data-id="${p.id}" ondragover="permitirSoltar(event)" ondragleave="quitarEfectoHover(event)" ondrop="soltarDefinicion(event, ${p.id})">
+                    <span><strong>${p.concepto}</strong></span>
+                </div>
+            `).join('');
+
+            let itemsHtml = definicionesDesordenadas.map(p => `
+                <div class="asoc-draggable-item" draggable="true" ondragstart="iniciarArrastre(event, ${p.id})" id="def-${p.id}">
+                    ${p.definicion}
+                </div>
+            `).join('');
+
+            document.getElementById('mainContent').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn-volver-menu" onclick="cambiarVistaConTransicion(() => menuNiveles('asociacion'))"><i class="fa-solid fa-arrow-left"></i> Cambiar Nivel</button>
+                    <button class="btn-reiniciar-juego" onclick="cambiarVistaConTransicion(() => iniciarAsociacion(${asocNivelActual}))"><i class="fa-solid fa-rotate-right"></i> Reiniciar</button>
+                </div>
+                <h2><i class="fa-solid fa-shuffle" style="color: #0284c7;"></i> Emparejamiento por Deslizamiento (Nivel ${asocNivelActual})</h2>
+                <p>Arrastra cada definición de la derecha y soltala en el concepto correspondiente de la izquierda:</p>
+                <div class="asociacion-layout" style="margin-top: 20px;">
+                    <div class="asociacion-columna">
+                        <div class="asociacion-titulo-col"><i class="fa-solid fa-atom"></i> Conceptos</div>
+                        ${slotsHtml}
+                    </div>
+                    <div class="asociacion-columna">
+                        <div class="asociacion-titulo-col"><i class="fa-solid fa-book"></i> Definiciones</div>
+                        ${itemsHtml}
+                    </div>
+                </div>
+                <div id="alertaAsoc"></div>
+            `;
+        }
+
+        function iniciarArrastre(event, id) {
+            event.dataTransfer.setData('text/plain', id);
+        }
+
+        function permitirSoltar(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('hovered');
+        }
+
+        function quitarEfectoHover(event) {
+            event.currentTarget.classList.remove('hovered');
+        }
+
+        function soltarDefinicion(event, conceptoId) {
+            event.preventDefault();
+            const slot = event.currentTarget;
+            slot.classList.remove('hovered');
+
+            if (slot.classList.contains('emparejado')) return;
+
+            const definicionId = parseInt(event.dataTransfer.getData('text/plain'));
+
+            if (conceptoId === definicionId) {
+                const elementoArrastrado = document.getElementById(`def-${definicionId}`);
+                if (elementoArrastrado) {
+                    slot.classList.add('emparejado');
+                    slot.innerHTML = `<strong>${slot.querySelector('strong').textContent}</strong>: <span style="color: #166534; font-size: 0.95rem;">${elementoArrastrado.textContent}</span>`;
+                    elementoArrastrado.remove();
+                    emparejamientosExitosos++;
+
+                    const totalParejas = parejasActualesPartida.length;
+
+                    if (emparejamientosExitosos === totalParejas) {
+                        document.getElementById('alertaAsoc').innerHTML = `
+                            <div class="alerta-desafio-superado" style="margin-top:25px; display:flex; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:15px;">
+                                    <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #22c55e;"></i>
+                                    <div><strong>¡Emparejamiento Exitoso!</strong> Has completado las ${totalParejas} asociaciones del Nivel ${asocNivelActual}.</div>
+                                </div>
+                                <button class="btn-siguiente-nivel" onclick="avanzarSiguienteNivelMismoJuego('asociacion', ${asocNivelActual})">Siguiente Nivel <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        `;
+                    }
+                }
+            } else {
+                slot.classList.add('incorrecto-anim');
+                setTimeout(() => {
+                    slot.classList.remove('incorrecto-anim');
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>
